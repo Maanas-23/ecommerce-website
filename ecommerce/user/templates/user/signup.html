@@ -1,0 +1,39 @@
+{% extends 'home/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+    Sign up for an account
+{% endblock %}
+
+{% block content %}
+    <div class="content-section">
+        <form method="post">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">
+                    Sign up for an account here!
+                </legend>
+                {{ form|crispy }}
+                {{ profile_form|crispy }}
+            </fieldset>
+            <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Sign Up</button>
+            </div>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Already have an account? <a class="ml-2" href="{% url 'login' %}">log in</a>
+            </small>
+
+        </div>
+        <small class="text-muted">
+            Create a vendor account instead <a class="ml-2" href="#">Sign up as a vendor</a>
+        </small>
+
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+    <a href="{% url 'vendor-signup' %}">
+        <button class="btn btn-outline-primary add-btn">Sign up for a vendor account</button>
+    </a>
+{% endblock sidebar %}

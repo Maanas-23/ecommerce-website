@@ -1,0 +1,30 @@
+{% extends 'home/base.html' %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+    <p>Total bill = {{  cart.get_total_bill }}</p>
+    <p>Total items = {{ cart.get_total_items }}</p>
+    <button data-item="{{ i.id }}" data-action="buyall" class="btn btn-outline-primary add-btn update-cart">Checkout</button>
+    <hr>
+    {% for i in Item %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ i.get_vendor }}</a>
+              <small class="text-muted">{{ i.date|date:"d F, Y"}}</small>
+            </div>
+              <h6><a class="article-title" href="{% url 'home' %}">{{ i.get_title }}</a>
+                <div>
+                    &#8377;Price : {{ i.price }}
+                    Quantity : {{ i.qty }}
+                </div></h6>
+                  <h5>
+                    &#8377;Total : {{ i.get_total }}
+                  </h5>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

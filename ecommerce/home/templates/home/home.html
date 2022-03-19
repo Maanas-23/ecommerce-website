@@ -1,0 +1,40 @@
+{% extends 'home/base.html' %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+
+    {% for i in Item %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ i.vendor }}</a>
+              <small class="text-muted">{{ i.date|date:"d F, Y"}}</small>
+            </div>
+                  <h6><div><a class="article-title" href="{% url 'home' %}">{{ i.title }}</a></div>
+                      <img class='image-item' src="{{ i.img.url }}" alt="" style="width:30%; margin-left:30%"></h6>
+                <h6>
+                <div>
+                    {% if i.discounted_price %}
+                        &#8377;{{ i.discounted_price }}  <small><del class="text-muted">&#8377;{{ i.price }}</del></small>
+                    {% else %}
+                        &#8377;{{ i.price }}
+                    {% endif %}
+                </div>
+              </h6>
+            <button data-item="{{ i.id }}" data-action="add" class="btn btn-outline-primary add-btn update-cart">Add to cart</button>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
+
+{% block sidebar %}
+    {% if user.is_authenticated %}
+        <h3>Current balance: {{ user.profile.balance }}</h3>
+        <a href="{% url 'manage-funds' %}">
+            <button data-item="{{ user.id }}" data-action="manage-funds" class="btn btn-outline-primary add-btn">Manage Funds</button>
+        </a>
+    {% endif %}
+{% endblock sidebar %}

@@ -1,0 +1,28 @@
+{% extends 'home/vendor-base.html' %}
+
+
+{% block title %}
+    Vendor Home
+{% endblock %}
+
+{% block content %}
+    <h1>Items put up for sale by you</h1>
+    {% for i in Item %}
+        <article class="media content-section">
+          <div class="media-body">
+              <h6><div><a class="article-title" href="{% url 'home' %}">{{ i.title }}</a></div>
+                  <img class='image-item' src="{{ i.img.url }}" alt="" style="width:30%; margin-left:30%"></h6>
+              <h6>
+                <div>
+                    {% if i.discounted_price %}
+                        &#8377;{{ i.discounted_price }}  <small><del class="text-muted">&#8377;{{ i.price }}</del></small>
+                    {% else %}
+                        &#8377;{{ i.price }}
+                    {% endif %}
+                </div>
+            </h6>
+            <button data-item="{{ i.id }}" data-action="remove-item" class="btn btn-outline-primary add-btn update-cart">Remove Item</button>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

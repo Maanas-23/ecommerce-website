@@ -1,0 +1,42 @@
+{% extends 'home/base.html' %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+    <p>Total bill = {{  cart.get_total_bill }}</p>
+    <p>Total items = {{ cart.get_total_items }}</p>
+    <button data-item="{{ i.id }}" data-action="buyall" class="btn btn-outline-primary add-btn update-cart">Checkout</button>
+    <hr>
+    {% for i in items %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ i.item.vendor }}</a>
+              <small class="text-muted">{{ i.item.date|date:"d F, Y"}}</small>
+            </div>
+              <h6><a class="article-title" href="{% url 'home' %}">{{ i.get_title }}</a>
+                  <div><img class='image-item' src="{{ i.item.img.url }}" alt="Fail" style="width:30%; margin-left:30%"></div>
+                <div>
+                    &#8377;Price : {{ i.get_price }}
+                    Quantity : {{ i.qty }}
+                    <button data-item="{{ i.id }}" data-action="append" class="btn btn-outline-primary add-btn update-cart">+</button><button data-item="{{ i.id }}" data-action="remove" class="btn btn-outline-primary add-btn update-cart">-</button>
+                </div></h6>
+                  <h5>
+                    &#8377;Total : {{ i.get_total }}
+                      <button data-item="{{ i.id }}" data-action="buy" class="btn btn-outline-secondary add-btn update-cart">Buy Item</button>
+                  </h5>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
+
+{% block sidebar %}
+    {% if user.is_authenticated %}
+        <h3>Current balance: {{ user.profile.balance }}</h3>
+        <a href="{% url 'manage-funds' %}">
+            <button data-item="{{ user.id }}" data-action="manage-funds" class="btn btn-outline-primary add-btn">Manage Funds</button>
+        </a>
+    {% endif %}
+{% endblock sidebar %}
